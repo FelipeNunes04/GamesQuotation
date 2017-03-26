@@ -1,0 +1,124 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="solicitaCotacao"> 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Solicitar Cotação</title>
+  <!-- icone da página 
+  <link rel="shortcut icon" href="images/favicon.ico">-->
+  <!-- bootstrap -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- font awesome -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+  <!-- style.css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <!-- fonts do google -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+  
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+  <script src="{% static 'js/angular-locale_pt-br.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-cookies.min.js"></script>
+  <!-- app -->
+  <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/controllers/cotacaoCtrl.js' %}"></script>
+  <!-- cotacaoController -->
+  <!--<script src="{% static 'js/controllers/cotacaoCtrl.js' %}"></script>-->
+
+
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+  <![endif]-->
+ 
+</head><!--/head-->
+
+<body ng-controller="cotacaoCtrl">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center text-success">{[{appname}]}</h1>
+                <div class="jumbotron">
+                    <form>
+                      <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" id="name" placeholder="Nome" ng-model="cliente.nome">
+                      </div>    
+                      <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="cliente.email" >
+                      </div>   
+
+                      <!-- Adicionar Jogos -->
+                      <legend class="lead">JOGOS</legend>
+                      <div class="form-inline">
+                        <div class="form-group">
+                            <label for="jogo">Selecione o Jogo</label>
+                            <select class="form-control" id="jogo" ng-model="jogo.nome" ng-options="jogo.fields.nome+' (R$'+jogo.fields.preco+')' for jogo in jogos">
+                              <option value="">Selecione um Jogo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" class="form-control" id="quantidade" ng-model="jogo.quantidade">
+                        </div>
+                        <div class="form-group"  ng-show="jogo.quantidade>0 && jogo.nome">
+                            <label>Sub-total: {[{ (jogo.nome.fields.preco * jogo.quantidade) | currency }]}</label>
+                        </div>
+                        <a class="btn btn-info margin-left-1x" id="add-item" ng-click="adicionarJogo(jogo)" ng-disabled="!jogo.nome || jogo.quantidade<=0 || !jogo.quantidade"><i class="fa fa-plus"></i> Adicionar Jogo</a>
+                      </div>
+
+                      <!-- Lista de Jogos -->
+                      <table class="table table-striped margin-top-2x">
+                          <thead>
+                            <tr>
+                                <th>Nome do Jogo</th>
+                                <th>Quantidade</th>
+                                <th>Sub-total</th>
+                            </tr>
+                          </thead>
+                            <tr ng-repeat="jogo in lista_jogos">
+                                <td>{[{jogo.nome}]}</td>
+                                <td>{[{jogo.quantidade}]}</td>
+                                <td>{[{jogo.subTotal  | currency}]}</td>
+                            </tr>
+                          <tfoot>
+                            <tr>
+                                <th>Nome do Jogo</th>
+                                <th>Quantidade</th>
+                                <th>Sub-total</th>
+                            </tr>
+                          </tfoot>
+                          
+                      </table>
+
+                      <a class="btn btn-primary margin-top-2x" ng-click="enviarSolicitacao(cliente, lista_jogos)" ng-disabled="!cliente.nome || !cliente.email || !lista_jogos.length>0">
+                          <i class="fa fa-send"></i>
+                          Enviar Solicitação
+                    </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <p>&copy; 2017 empresa ,. Ltd</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
