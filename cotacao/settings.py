@@ -128,7 +128,3 @@ STATIC_ROOT = ''
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-
-    ('assets', os.path.join(PROJECT_DIR, '../static')),
-)
