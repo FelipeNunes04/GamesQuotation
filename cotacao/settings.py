@@ -25,7 +25,7 @@ SECRET_KEY = '#_)2aj#&rmb9fes2vmr+94k&bl1g58s8pw-w*qn$7k!l3gl5!&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['meugamebarato.pythonanywhere.com']
 
 
 
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -82,8 +82,11 @@ WSGI_APPLICATION = 'cotacao.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'meugamebarato$cotacao',
+        'USER': 'meugamebarato',
+        'PASSWORD': 'ricardo2017R',
+        'HOST': 'meugamebarato.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -110,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -124,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = 'static/'
 
 STATIC_URL = '/static/'
 
