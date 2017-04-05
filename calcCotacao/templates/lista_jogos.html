@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<script type="text/javascript">
+   
+
+	    var app = angular.module('app',['firebase',
+	    'ngCookies'
+	    ], function($interpolateProvider){
+	      // Contorna prroblema de interpolação da renderização de template do django
+	      $interpolateProvider.startSymbol('{[{');
+	      $interpolateProvider.endSymbol('}]}');
+	    })
+	    .run( function run($http, $cookies ){
+	      // Evita problemas relacionados ao CSRF
+	      $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
+	    });
+
+	    app.controller("buscarCtrl",["$scope","$firebaseArray","$http",
+	      function($scope,$firebaseArray,$http){
+
+	      var ref = new Firebase("https://meu-game-barato.firebaseio.com");
+	      var cotacoes_enviadas = ref.child("cotacoes_enviadas");
+	      $scope.cotacoes_enviadas = $firebaseArray(cotacoes_enviadas);
+	      console.log($scope.cotacoes_enviadas);
+	      
+
+
+	    }]);
+
+	  </script>
+    
+
+	<table id="example1" class="table table-striped table-hover" ng-app="app" ng-controller="buscarCtrl">
+		<thead>
+			<tr>
+				<th>Código da Cotação</th>
+				<th>Cliente</th>
+				<th>Email do Cliente</th>
+				<th>Telefone</th>
+				<th>Endereço</th>
+				<th>Opçao para Receber</th>
+				<th>Banco</th>
+				<th>Agência</th>
+				<th>Conta</th>
+				<th>CPF Titular</th>
+				<th>Nome Titular</th>
+				<th>Total</th>
+				<th>Data</th>
+			
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="cotacao in cotacoes_enviadas">
+                <td>{[{cotacao.$id}]}</td>
+                <td>{[{cotacao.nome}]}</td>
+                <td>{[{cotacao.email}]}</td>
+                <td>{[{cotacao.telefone}]}</td>
+                <td>{[{cotacao.endereco}]}</td>
+                <td>{[{cotacao.opcao}]}</td>
+                <td>{[{cotacao.banco}]}</td>
+                <td>{[{cotacao.agencia}]}</td>
+                <td>{[{cotacao.conta}]}</td>
+                <td>{[{cotacao.cpf}]}</td>
+                <td>{[{cotacao.nomeTitular}]}</td>
+                <td>{[{cotacao.total}]}</td>
+                <td>{[{cotacao.data}]}</td>
+               
+            </tr>
+		</tbody>
+		<tfoot>
+			<th>Código da Cotação</th>
+			<th>Cliente</th>
+			<th>Email do Cliente</th>
+			<th>Telefone</th>
+			<th>Endereço</th>
+			<th>Opçao para Receber</th>
+			<th>Banco</th>
+			<th>Agência</th>
+			<th>Conta</th>
+			<th>CPF Titular</th>
+			<th>Nome Titular</th>
+			<th>Total</th>
+			<th>Data</th>
+			
+		</tfoot>
+	</table>
+{% endblock %}

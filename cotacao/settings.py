@@ -131,3 +131,14 @@ STATIC_ROOT = 'static/'
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/usuario/login/'
+
+LOGOUT_URL = '/usuario/logout/'
+
+LOGIN_REDIRECT_URL = '/'
+
+#SETTINGS LOCAL
+try:
+    from .settings_local import *
+except ImportError:
+    pass
